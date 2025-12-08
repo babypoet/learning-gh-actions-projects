@@ -31,9 +31,9 @@ jobs:
     Deploy:
         runs-on: ubuntu-latest
         if: ${{ !inputs.dry-run }}
-        environment: ${{ inputs.target}}
+        environment: ${{ inputs.target }}
         steps:
           - name: Deploy 
-            run: echo "Deploy to ${{ inputs.target}}"
+            run: echo "Deploy to ${{ inputs.target }}"
     
         
