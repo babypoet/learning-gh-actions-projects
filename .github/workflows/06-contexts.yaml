@@ -6,7 +6,7 @@ on:
    workflow_dispatch:
     inputs:
         debug:
-            description: 'debugging info'
+#            description: 'debugging info'
             type: boolean
             default: false
  
