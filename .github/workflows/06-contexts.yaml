@@ -8,7 +8,7 @@ on:
         debug:
             description: 'debugging info'
             type: boolean
-            default: true
+            default: false
  
 
 env: 
