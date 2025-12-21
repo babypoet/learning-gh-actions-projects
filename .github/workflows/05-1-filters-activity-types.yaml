@@ -2,9 +2,13 @@ name: 05-1 filters and activity types
 
 on:
     workflow_dispatch:
-        types: [opened, synchronize]
-        branches: 
-          - main
+#    push:
+#          branches: 
+#          - main
+#          - opened 
+#          - synchronize
+#    pull_request:
+#          types: [opened, synchronize, closed, edited, labeled]
 
 
 jobs: 
