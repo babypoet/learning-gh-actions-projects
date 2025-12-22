@@ -8,11 +8,11 @@ jobs:
     echo1:
         runs-on: ubuntu-latest
         steps:
-         - name: Print PR title
-           run: echo "${{ github.event.pull_request.title }}"
-         - name: Bug step
-           if: ${{ !cancelled() && contains(github.event.pull_request.title, 'fix') }}
-           run: echo "Bug fix"
+#         - name: Print PR title
+#           run: echo "${{ github.event.pull_request.title }}"
+#         - name: Bug step
+#           if: ${{ !cancelled() && contains(github.event.pull_request.title, 'fix') }}
+#           run: echo "Bug fix"
          - name: I will be execute
            if: ${{ success () }}
            run: echo " print if previous step succeeds"
