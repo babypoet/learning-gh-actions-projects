@@ -42,4 +42,4 @@ jobs:
           - name: Deploy 
             run: echo "Deploying"
           - name: Print output 
-            run: echo "This step succeded"
+            run: echo "This step succeded because the build job output 'build-status' is set to ${{ needs.build.outputs.build-status }}"
