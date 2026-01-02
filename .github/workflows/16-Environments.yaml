@@ -4,11 +4,11 @@ run-name: 16 - Environments | Deploy to ${{ inputs.target-env }}
 
 on:
     workflow_dispatch:
-        inputs:
-            target-env:
-                type: environment
-                description: "Target environment for deployment"
-                default: staging
+#        inputs:
+#            target-env:
+#                type: environment
+#                description: "Target environment for deployment"
+#                default: staging
                 
 
 jobs:
