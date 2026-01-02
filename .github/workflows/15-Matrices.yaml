@@ -42,8 +42,8 @@ jobs:
           size: [small, large]
           shape: [circle, square]
           include:
-            - opacity: [50]
-              color: red
+            - opacity: 50
+            - color: red
               size: medium
               shape: triangle
               
