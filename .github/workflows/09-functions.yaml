@@ -1,4 +1,4 @@
-name: 09 - Using Functions
+name: 09 - Functions
 
 on:
    workflow_dispatch:

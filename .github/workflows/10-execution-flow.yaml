@@ -1,4 +1,4 @@
-name: 10 - Contrlling the execution FLOW
+name: 10 - Execution FLOW
 
 on: 
     workflow_dispatch:

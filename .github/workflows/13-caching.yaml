@@ -1,4 +1,4 @@
-name: 13 - Using Caching
+name: 13 - Caching
 
 on:
     workflow_dispatch:      
