@@ -47,7 +47,10 @@ jobs:
               size: medium
               shape: triangle
           exclude:
-            - opacity: 50
+            - color: green
+              shape: square
+              size: large
+            
               
       steps:
         - name: Placeholder step
