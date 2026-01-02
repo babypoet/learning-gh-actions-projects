@@ -11,7 +11,7 @@ jobs:
         name: ${{ matrix.os }}-${{ matrix.node-version }}
         runs-on: ${{ matrix.os }}
         strategy:
-          fail-fast: true
+          fail-fast: false
           matrix:
             node-version: [18.x, 21.x, 25.x]
             os: [ubuntu-latest, windows-latest]
@@ -26,7 +26,7 @@ jobs:
                   node-version: ${{ matrix.node-version }}
             - name: Fail if experimental
               if: matrix.tag == 'experimental'
-              run: exit 0
+              run: exit 1
             - name: Perform some tests
               run: | 
                 echo "Running tests on OS ${{ matrix.os }} and NodeJS ${{ matrix.node-version }}"
