@@ -1,0 +1,30 @@
+name: 17 - Custom Actions - Composite
+
+
+
+
+on:
+    workflow_dispatch:
+
+env:
+    working-directory: 17-custiom-actions/react-app
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v6
+            - name: Setup Node and Npm dependencies cache
+              uses: ./.github/actions/composite/action.yaml
+              with:
+                  node-version: 24.x
+                  working-dir: ${{ env.working-directory }}
+            
+            - name: Verify NodeJS installation
+              run: npm run test
+              working-directory: ${{ env.working-directory }}
+            
+            - name: Build 
+              run: npm run build
+              working-directory: ${{ env.working-directory }}
+            
