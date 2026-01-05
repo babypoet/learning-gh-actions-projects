@@ -29,12 +29,12 @@ runs:
           path: ${{inputs.working-dir}}/node_modules
           key: node-modules-${{ hashFiles('${{ inputs.working-dir }}/package-lock.json') }}
     - name: Install NPM dependencies
-      if: steps.cache.outputs.cache-hit != 'true' && inputs.target-env == 'development'
+      if: steps.cache.outputs.cache-hit != 'true' && inputs.target-env == 'dev'
       run: npm ci
       shell: bash
       working-directory: ${{ inputs.working-dir }}
     - name: Install NPM dependencies
-      if: steps.cache.outputs.cache-hit != 'true' && inputs.target-env != 'development'
+      if: steps.cache.outputs.cache-hit != 'true' && inputs.target-env != 'dev'
       run: npm ci --omit=dev
       shell: bash
       working-directory: ${{ inputs.working-dir }}

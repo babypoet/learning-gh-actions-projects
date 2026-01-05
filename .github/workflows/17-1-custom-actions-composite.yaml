@@ -5,7 +5,13 @@ name: 17 - Custom Actions - Composite
 
 on:
     workflow_dispatch:
-
+        inputs:
+            target-env:
+                description: 'Target environment: dev or prod'
+                type: choice
+                options:
+                    - dev
+                    - prod
 env:
     working-directory: 17-custom-actions/react-app
 
