@@ -21,10 +21,10 @@ jobs:
                   working-dir: ${{ env.working-directory }}
             
             - name: Verify NodeJS installation
-              run: npm run test
+              run: npm test
               working-directory: ${{ env.working-directory }}
             
             - name: Build 
-              run: npm run build
+              run: npm build
               working-directory: ${{ env.working-directory }}
             
