@@ -1,5 +1,5 @@
 name: 17 - Custom Actions - Composite
-run-name: 17 - Custom Actions - V1 - Composite | env - #${{ inputs.target-env }}#
+run-name: 17 - Custom Actions - V1 - Composite | env - ${{ inputs.target-env }}
 
 
 
@@ -22,7 +22,7 @@ jobs:
         steps:
             - uses: actions/checkout@v6
             - name: Setup Node and Npm dependencies cache
-              uses: ./.github/actions/composite-cache-deps
+              uses: ./.github/actions/composite-cache-deps/action.yaml
               with:
                   node-version: 24.x
                   working-dir: ${{ env.working-directory }}
