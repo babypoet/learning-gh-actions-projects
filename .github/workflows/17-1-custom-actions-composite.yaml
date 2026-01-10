@@ -22,7 +22,7 @@ jobs:
         steps:
             - uses: actions/checkout@v6
             - name: Setup Node and Npm dependencies cache
-              uses: ./.github/actions/composite-cache-deps/action.yaml
+              uses: ./.github/actions/action
               with:
                   node-version: 24.x
                   working-dir: ${{ env.working-directory }}
