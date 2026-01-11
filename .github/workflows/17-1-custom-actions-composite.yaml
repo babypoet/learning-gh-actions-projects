@@ -1,4 +1,4 @@
-name: 17 - Custom Actions - Composite
+name: 17 - 1 - Custom Actions - Composite
 run-name: 17 - Custom Actions - V1 - Composite | env - ${{ inputs.target-env }}
 
 
