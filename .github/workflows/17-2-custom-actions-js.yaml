@@ -6,8 +6,7 @@ on:
 
 
 jobs:
-    build:
-        name: dependency-update
+    dependency-update:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout Code
