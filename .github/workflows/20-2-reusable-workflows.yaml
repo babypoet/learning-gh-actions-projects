@@ -1,4 +1,5 @@
 name: 20.2 - reusable-workflows
+run-name: 20.2 - reusable-workflows
 
 on: 
   workflow_dispatch:
@@ -10,7 +11,7 @@ jobs:
         with:
           target-directory: placeholder-directory
     e2e-tests:
-        uses: babypoet/Cypress-E2E-testing-project/.github/workflows/e2e.yaml
+        uses: babypoet/Cypress-E2E-testing-project/.github/workflows/e2e.yaml@main
         
 
     
