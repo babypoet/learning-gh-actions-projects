@@ -15,6 +15,9 @@ on:
               default: 17-custom-actions/react-app
                 
 
+permissions:
+  contents: write
+  pull-requests: write
 
 
 jobs:
@@ -31,6 +34,7 @@ jobs:
                 base-branch: ${{ inputs.base-branch }}
                 target-branch: ${{ inputs.target-branch }}
                 working-directory: ${{ inputs.working-directory }}
+                gh-token: ${{ secrets.GITHUB_TOKEN }}
               
             
 
