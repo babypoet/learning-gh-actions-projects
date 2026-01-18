@@ -21,6 +21,13 @@ on:
                    - 24.x
                    - 25.x
                 default: 24.x
+            package-manager-cache:
+                type: choice
+                description: "Package manager cache type"
+                options:
+                   - "true"
+                   - "false"
+                default: "false"
 
 env:
     working-directory: 17-custom-actions/react-app
