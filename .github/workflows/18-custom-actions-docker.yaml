@@ -1,5 +1,5 @@
 name: 18- Custom Actions - Docker
-run-name: 18- Custom Actions 
+run-name: 18- Custom Actions - Ping ${{ inputs.url }}
 
 on:
   workflow_dispatch:
