@@ -31,7 +31,7 @@ def run():
     website_reacheable = ping_url(website_url, delay, max_trials)
     
     if not website_reacheable:
-        raise Exception(f"Website {website_url} is not reachable")
+        raise RuntimeError(f"Website {website_url} is not reachable.")
     print(f"Website {website_url} is reachable.")
 
 if __name__ == "__main__":
