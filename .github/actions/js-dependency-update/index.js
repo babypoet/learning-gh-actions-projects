@@ -2,24 +2,48 @@ const core = require('@actions/core');
 const exec = require('@actions/exec');
 const github = require('@actions/github');
 
+
+const setupGit =  async () => { 
+    await exec.exec(`git config --global user.name  "gh-automation"`); 
+    await exec.exec(`git config --global user.email "gh-automation@email.com"`);
+};
+
 const validateBranchName = ({ branchName }) =>
   /^[a-zA-Z0-9_\-\.\/]+$/.test(branchName);
 const validateDirectoryName = ({ dirName }) =>
   /^[a-zA-Z0-9_\-\/]+$/.test(dirName);
 
+const setupLogger = ({ debug, prefix } = { debug: false, prefix: ''}) => ({
+  debug: () =>  {
+    if (debug) {
+      core.info(`DEBUG ${prefix}${prefix ? ' :' : ''}${message}`);
+    }
+  },
+  info: (message) => {
+    core.info(` ${prefix}${prefix ? ' :' : ''}${message}`);
+  },
+  error: (message) => {
+    core.error(`${prefix}${prefix ? ' :' : ''}${message}`)
+  }
+
+  });
+
 async function run() {
   const baseBranch = core.getInput('base-branch', { required: true });
-  const targetBranch = core.getInput('target-branch', { required: true });
+  const headBranch = core.getInput('head-branch', { required: true });
   const ghToken = core.getInput('gh-token', { required: true });
   const workingDir = core.getInput('working-directory', { required: true });
   const debugInput = core.getInput('debug');
   const debug = debugInput.toLowerCase() === 'true';
+  const logger = setupLogger({ debug, prefix: '[js-dependency-update]' });
 
   const commonExecOpts = {
     cwd: workingDir,
   }
 
   core.setSecret(ghToken);
+
+  logger.debug('validating inputs - baseBranch, headBranch, workingDir');
 
   if (!validateBranchName({ branchName: baseBranch })) {
     core.setFailed(
@@ -28,9 +52,9 @@ async function run() {
     return;
   }
 
-  if (!validateBranchName({ branchName: targetBranch })) {
+  if (!validateBranchName({ branchName: headBranch })) {
     core.setFailed(
-      'Invalid target-branch name. Branch names should include only characters, numbers, hyphens, underscores, dots, and forward slashes.'
+      'Invalid head-branch name. Branch names should include only characters, numbers, hyphens, underscores, dots, and forward slashes.'
     );
     return;
   }
@@ -41,11 +65,11 @@ async function run() {
     );
     return;
   }
+  logger.debug(`base branch is ${baseBranch}`);
+  logger.debug(`[head branch is ${headBranch}`);
+  logger.debug(`working directory is ${workingDir}`);
 
-  core.info(`[js-dependency-update] : base branch is ${baseBranch}`);
-  core.info(`[js-dependency-update] : target branch is ${targetBranch}`);
-  core.info(`[js-dependency-update] : working directory is ${workingDir}`);
-
+  logger.debug(`checking packages updates`);
   await exec.exec('npm update', [], {
     ...commonExecOpts,
   });
@@ -59,10 +83,12 @@ async function run() {
   );
 
   if (gitStatus.stdout.length > 0) {
-    core.info('[js-dependency-update] : There are updates available!');
-    await exec.exec(`git config --global user.name  "gh-automation"`); 
-    await exec.exec(`git config --global user.email "gh-automation@email.com"`);
-    await exec.exec(`git checkout -b ${targetBranch}`, [], {
+    logger.debug('There are updates available!');
+    logger.debug('setting up git');
+    await setupGit(); 
+
+    logger.debug(`committing and pushing changes`);
+    await exec.exec(`git checkout -b ${headBranch}`, [], {
       ...commonExecOpts,
     });
     await exec.exec(`git add package.json package-lock.json`, [], {
@@ -70,28 +96,31 @@ async function run() {
     });
     await exec.exec(`git commit -m "chore: update js dependencies"`, [], {
     });
-    await exec.exec(`git push -u origin ${targetBranch} --force`, [], {
+    await exec.exec(`git push -u origin ${headBranch} --force`, [], {
       ...commonExecOpts,
     });
-
+    logger.debug('fetching octokit API');
     const octokit = github.getOctokit(ghToken);
 
     try{
+    logger.debug('creating pull request in ${headBranch}');
+
     await octokit.rest.pulls.create({
       owner: github.context.repo.owner,
       repo: github.context.repo.repo,
       title: 'update js dependencies',
       body: 'This PR updates NPM packages',
-      head: targetBranch,
+      head: headBranch,
       base: baseBranch
     })
      }  catch(e){
-        core.error('[js-dependency-update] : something went wrong.');
+        logger.error('something went wrong. Check logs below:');
         core.setFailed(e.message); 
-        core.warning(e);
+        logger.error(e);
        
     }         
   } else {
+    logger.info('No updates available');
     
   }
   
