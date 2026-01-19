@@ -18,3 +18,18 @@ jobs:
                 echo "Non-feature PR detected."
                 exit 1
                 fi
+    safe-pr:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout Code
+              uses: actions/checkout@v6
+            - name: Check PR Title
+              env: 
+                TITLE: ${{ github.event.pull_request.title }}
+              run: |
+                if [[ "$TITLE" ~= ^feat ]]; then
+                echo "Feature PR detected."
+                else
+                echo "Non-feature PR detected."
+                exit 1
+                fi
